@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (web)",
+            "name": "Core API",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -10,21 +10,29 @@
             "args": [],
             "cwd": "${workspaceFolder}/server/Core.Api",
             "stopAtEntry": false,
-            // "serverReadyAction": {
-            //     "action": "openExternally",
-            //     "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            // },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_URLS": "https://localhost:7140;http://localhost:80",
-                "PRIMARY_DB_HOST": "localhost",
-                "PRIMARY_DB_PORT": "35432",
-                "PRIMARY_DB_NAME": "highloadsocial",
-                "PRIMARY_DB_USER": "postgres",
-                "PRIMARY_DB_PASSWORD": "postgres"
+                "ASPNETCORE_URLS": "https://localhost:7140;http://localhost:80"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/server/Views"
+            }
+        },
+        {
+            "name": "Dialogs API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/server/Dialogs.Api/bin/Debug/net8.0/Dialogs.Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/server/Dialogs.Api",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:7150;http://localhost:8080"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/server/Dialogs.Api/Views"
             }
         },
         {
