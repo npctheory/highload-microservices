@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.65.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.65.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
@@ -19,4 +21,7 @@
     <ProjectReference Include="..\Dialogs.Infrastructure\Dialogs.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Protobuf Include="Protos\dialogs.proto" GrpcServices="Server" />
+  </ItemGroup>
 </Project>

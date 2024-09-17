@@ -1,14 +1,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR ./server
-COPY HighloadSocial.sln ./
-COPY Core.Api/Core.Api.csproj ./Core.Api/
-COPY Core.Application/Core.Application.csproj ./Core.Application/
-COPY Core.Infrastructure/Core.Infrastructure.csproj ./Core.Infrastructure/
-COPY Core.Domain/Core.Domain.csproj ./Core.Domain/
-COPY EventBus/EventBus.csproj ./EventBus/
-RUN dotnet restore
+WORKDIR /src
 COPY . .
-RUN dotnet publish Core.Api/Core.Api.csproj -c Release -o /app/publish
+WORKDIR ./Core.Api
+RUN dotnet restore
+RUN dotnet publish Core.Api.csproj -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
