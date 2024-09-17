@@ -83,28 +83,28 @@ services:
     # ports:
       # - "8080:80"
 
-  # dialogs:
-    # build:
-      # context: ./server
-      # dockerfile: ./dialogs.api/dockerfile
-    # image: dialogs:local
-    # container_name: dialogs
-    # restart: unless-stopped
-    # environment:
-      # primary_db_host: pg_master
-      # primary_db_port: 5432
-      # primary_db_name: highloadsocial
-      # primary_db_user: postgres
-      # primary_db_password: postgres
-      # aspnetcore_environment: production
-      # aspnetcore_urls: "http://*:80"
-    # depends_on:
-      # pg_master:
-        # condition: service_healthy
-    # networks:
-      # - highload_net
-    # ports:
-      # - "8082:80"
+  dialogs:
+    build:
+      context: ./server
+      dockerfile: ./Dialogs.Api/Dockerfile
+    image: dialogs:local
+    container_name: dialogs
+    restart: unless-stopped
+    environment:
+      primary_db_host: pg_master
+      primary_db_port: 5432
+      primary_db_name: highloadsocial
+      primary_db_user: postgres
+      primary_db_password: postgres
+      aspnetcore_environment: Production
+    depends_on:
+      pg_master:
+        condition: service_healthy
+    networks:
+      - highload_net
+    ports:
+      - "80:80"
+      - "82:82"
       
   redisinsight:
     image: redis/redisinsight:latest

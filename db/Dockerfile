@@ -1,4 +1,4 @@
-FROM citusdata/citus:latest
+FROM postgres:latest
 USER root
 
 RUN apt-get update && \

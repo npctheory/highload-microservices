@@ -29,7 +29,7 @@
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_URLS": "http://localhost:82"
+                "ASPNETCORE_URLS": "http://localhost:80;http://localhost:82"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/server/Dialogs.Api/Views"
