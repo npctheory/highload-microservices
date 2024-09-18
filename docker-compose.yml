@@ -75,6 +75,7 @@ services:
       PRIMARY_DB_PASSWORD: postgres
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: "http://*:80"
+      DIALOGS_GRPC_URL: "http://dialogs:82"
     depends_on:
       pg_master:
         condition: service_healthy
