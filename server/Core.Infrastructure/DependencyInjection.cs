@@ -63,12 +63,6 @@ namespace Core.Infrastructure
                 return new PostRepository(connectionString, mapper);
             });
 
-            services.AddScoped<IDialogRepository>(sp =>
-            {
-                var redis = sp.GetRequiredService<IConnectionMultiplexer>();
-                return new RedisDialogRepository(redis, databaseIndex: 1);
-            });
-
 
             return services;
         }

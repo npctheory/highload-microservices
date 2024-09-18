@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.Application.Dialogs.DTO;
+namespace Core.Api.DTO;
 public class DialogMessageDTO
 {
     public Guid Id { get; set; }

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Application.Dialogs.DTO;
+namespace Core.Api.DTO;
 
 public record AgentDTO(
     string AgentId

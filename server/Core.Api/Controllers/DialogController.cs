@@ -1,76 +1,98 @@
+using Grpc.Net.Client;
+using Dialogs.Api.Grpc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using System.Text.Json;
-using MediatR;
 using System.Security.Claims;
-using Core.Application.Dialogs.Commands.SendMessage;
-using Core.Application.Dialogs.Queries.ListMessages;
-using Core.Application.Dialogs.DTO;
-using Core.Application.Dialogs.Queries.ListDialogs;
+using Core.Api.DTO;
+using Grpc.Core;
+using System.Text.Json;
 
-namespace Core.Api.Controllers
+namespace Core.Api.Controllers;
+
+[ApiController]
+public class DialogController : ControllerBase
 {
-    [ApiController]
-    public class DialogController : ControllerBase
+    private readonly DialogService.DialogServiceClient _dialogServiceClient;
+
+    public DialogController(DialogService.DialogServiceClient dialogServiceClient)
     {
-        private readonly ISender _mediator;
+        _dialogServiceClient = dialogServiceClient;
+    }
 
-        public DialogController(ISender mediator)
+    [Authorize]
+    [HttpGet("dialog/list")]
+    public async Task<IActionResult> ListDialogs()
+    {
+        var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        try
         {
-            _mediator = mediator;
+            var response = await _dialogServiceClient.ListDialogsAsync(new ListDialogsRequest { UserId = userId });
+            var dialogs = response.Agents.Select(agent => new AgentDTO(agent.AgentId)).ToList();
+            return Ok(dialogs);
         }
-
-        [Authorize]
-        [HttpGet("dialog/list")]
-        public async Task<IActionResult> ListDialogs()
+        catch (RpcException ex) when (ex.StatusCode == Grpc.Core.StatusCode.Unauthenticated)
         {
-            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            
-            try
-            {
-                var dialogs = await _mediator.Send(new ListDialogsQuery(userId));
-                return Ok(dialogs);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Unauthorized();
-            }
+            return Unauthorized();
         }
+    }
 
-        [Authorize]
-        [HttpGet("dialog/{agentId}/list")]
-        public async Task<IActionResult> ListMessages([FromRoute] string agentId)
+    [Authorize]
+    [HttpGet("dialog/{agentId}/list")]
+    public async Task<IActionResult> ListMessages([FromRoute] string agentId)
+    {
+        var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        try
         {
-            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            
-            try
+            var response = await _dialogServiceClient.ListMessagesAsync(new ListMessagesRequest { UserId = userId, AgentId = agentId });
+            var messages = response.Messages.Select(message => new DialogMessageDTO
             {
-                var messages = await _mediator.Send(new ListMessagesQuery(userId, agentId));
-                return Ok(messages);
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return Unauthorized();
-            }
+                Id = Guid.Parse(message.Id),
+                Text = message.Text,
+                SenderId = message.SenderId,
+                ReceiverId = message.ReceiverId,
+                IsRead = message.IsRead,
+                Timestamp = DateTime.Parse(message.Timestamp)
+            }).ToList();
+            return Ok(messages);
         }
-
-
-        [Authorize]
-        [HttpPost("dialog/{receiverId}/send")]
-        public async Task<IActionResult> SendMessage([FromRoute] string receiverId, [FromBody] JsonElement jsonElement)
+        catch (RpcException ex) when (ex.StatusCode == Grpc.Core.StatusCode.Unauthenticated)
         {
-            var senderId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            string text = jsonElement.GetProperty("text").GetString();
+            return Unauthorized();
+        }
+    }
 
-            try
+    [Authorize]
+    [HttpPost("dialog/{receiverId}/send")]
+    public async Task<IActionResult> SendMessage([FromRoute] string receiverId, [FromBody] JsonElement jsonElement)
+    {
+        var senderId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        string text = jsonElement.GetProperty("text").GetString();
+
+        try
+        {
+            var response = await _dialogServiceClient.SendMessageAsync(new SendMessageRequest
             {
-                var message = await _mediator.Send(new SendMessageCommand(senderId, receiverId, text));
-                return Ok(message);
-            }
-            catch (UnauthorizedAccessException)
+                SenderId = senderId,
+                ReceiverId = receiverId,
+                Text = text
+            });
+            var message = response.Message;
+            var dialogMessageDto = new DialogMessageDTO
             {
-                return Unauthorized();
-            }
+                Id = Guid.Parse(message.Id),
+                Text = message.Text,
+                SenderId = message.SenderId,
+                ReceiverId = message.ReceiverId,
+                IsRead = message.IsRead,
+                Timestamp = DateTime.Parse(message.Timestamp)
+            };
+            return Ok(dialogMessageDto);
+        }
+        catch (RpcException ex) when (ex.StatusCode == Grpc.Core.StatusCode.Unauthenticated)
+        {
+            return Unauthorized();
         }
     }
 }
