@@ -55,6 +55,6 @@ x-request-id добавляется в миддлваре [Core.Api.Middleware.R
 Контроллер диалогов старого API [Core.Api.Controllers.DialogController](https://github.com/npctheory/highload-microservices/blob/main/server/Core.Api/Controllers/DialogController.cs) добавляет x-request-id в метадату запросов gRPC к новому API.  
 
 Пример работы сначала с новым API http://dialogs:80(http://localhost:8180), а потом старым (http://core:80(http://localhost:8080)).  
-Запросы к новому API логируются только на машине dialogs. Запросы к старому API логируются только и core и на dialogs.  
+Запросы к новому API логируются только на машине dialogs. Запросы к старому API логируются и на core и на dialogs.  
 
 [new_api_test_and_legacy_api_test.webm](https://github.com/user-attachments/assets/585f1ee5-c5d4-4993-85d9-00bfc1685cab)
