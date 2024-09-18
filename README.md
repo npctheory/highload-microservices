@@ -16,7 +16,7 @@ docker compose up --build -d
 ### Разделение монолита
 Солюшен собирается в два приложения:  
 Проекты с префиксом Core собираются в образ core:local, который запускается в контейнере core.  
-На http://core:80(http://localhost:8080) работают эндпоинты:  
+На http://core:80 (http://localhost:8080) работают эндпоинты:  
 register  
 login  
 user/get/{id}  
@@ -34,13 +34,13 @@ dialog/list
 dialog/{agentId}/list  
 dialog/{receiverId}/send  
 
-Проекты с префиксом Dialogs собираются в образ dialogs:local, который запускается в контейнере dialogs. На http://dialogs:80(http://localhost:8180) работают эндпоинты:  
+Проекты с префиксом Dialogs собираются в образ dialogs:local, который запускается в контейнере dialogs. На http://dialogs:80 (http://localhost:8180) работают эндпоинты:  
 dialog/list  
 dialog/{agentId}/list  
 dialog/{receiverId}/send  
 
 ### Взаимодействия монолитного сервиса и сервиса чатов  
-На http://dialogs:82(http://localhost:8182) работает сервер gRPC.  
+На http://dialogs:82 (http://localhost:8182) работает сервер gRPC.  
 Интерфейс для сервис gRPC генерируется из файла [dialogs.proto](https://github.com/npctheory/highload-microservices/blob/main/server/Dialogs.Api/Protos/dialogs.proto)  
 Методы контроллера [Core.Api.Controllers.DialogController](https://github.com/npctheory/highload-microservices/blob/main/server/Core.Api/Controllers/DialogController.cs) переписаны и теперь делают запросы через grpc-клиент к новому микросервису. Из библиотек Core.Application и Core.Domain удалены логика и модели для работы с диалогами.   
 Пример запросов к серверу диалогов через grpcurl:  
