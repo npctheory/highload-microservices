@@ -42,7 +42,7 @@ dialog/{receiverId}/send
 
 ### Взаимодействия монолитного сервиса и сервиса чатов  
 На dialogs:82 (http://localhost:8182) работает сервер gRPC.  
-Интерфейс для сервис gRPC генерируется из файла [dialogs.proto](https://github.com/npctheory/highload-microservices/blob/main/server/Dialogs.Api/Protos/dialogs.proto)  
+Интерфейс для сервиса gRPC генерируется из файла [dialogs.proto](https://github.com/npctheory/highload-microservices/blob/main/server/Dialogs.Api/Protos/dialogs.proto)  
 Методы контроллера [Core.Api.Controllers.DialogController](https://github.com/npctheory/highload-microservices/blob/main/server/Core.Api/Controllers/DialogController.cs) переписаны и теперь делают запросы через grpc-клиент к новому микросервису. Из библиотек Core.Application и Core.Domain удалены логика и модели для работы с диалогами.   
 Пример запросов к серверу диалогов через grpcurl:  
 
