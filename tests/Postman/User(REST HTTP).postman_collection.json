@@ -242,6 +242,32 @@
 			"response": []
 		},
 		{
+			"name": "Post Get",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/post/get/996c8713-d367-4f70-9a18-2d65da094fbe",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"get",
+						"996c8713-d367-4f70-9a18-2d65da094fbe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Post Create",
 			"request": {
 				"method": "POST",
@@ -254,7 +280,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"text\":\"Lorem Ipsum3\"\r\n}",
+					"raw": "{\r\n    \"text\":\"Lorem Ipsum123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -270,6 +296,47 @@
 					"path": [
 						"post",
 						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"lorem ipsum dolor\",\r\n    \"id\" : \"25d5d5e0-3f8e-4722-96a7-feba12bb93c5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}/post/update",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"post",
+						"update"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -296,7 +363,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{host}}/post/delete/fc853e20-78f1-456b-80a4-dc6f40805f3a",
+					"raw": "http://{{host}}/post/delete/25d5d5e0-3f8e-4722-96a7-feba12bb93c5",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -304,7 +371,75 @@
 					"path": [
 						"post",
 						"delete",
-						"fc853e20-78f1-456b-80a4-dc6f40805f3a"
+						"25d5d5e0-3f8e-4722-96a7-feba12bb93c5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListDialogs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{dialogs_host}}/dialog/list",
+					"protocol": "http",
+					"host": [
+						"{{dialogs_host}}"
+					],
+					"path": [
+						"dialog",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListMessages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{dialogs_host}}/dialog/Admin/list",
+					"protocol": "http",
+					"host": [
+						"{{dialogs_host}}"
+					],
+					"path": [
+						"dialog",
+						"Admin",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SendMessage",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"text\": \"Sup User\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{dialogs_host}}/dialog/Admin/send",
+					"protocol": "http",
+					"host": [
+						"{{dialogs_host}}"
+					],
+					"path": [
+						"dialog",
+						"Admin",
+						"send"
 					]
 				}
 			},
@@ -316,7 +451,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVc2VyIiwiZ2l2ZW5fbmFtZSI6IlVzZXIiLCJmYW1pbHlfbmFtZSI6IlVzZXIiLCJqdGkiOiI2ZjE5ZWIyZS1kNTBjLTRmMjEtYTljZi02MWE1MjBhYmY2ZjciLCJleHAiOjIwNDExNDgzNjEsImlzcyI6IkhpZ2hsb2FkU29jaWFsIiwiYXVkIjoiSGlnaGxvYWRTb2NpYWwifQ.trR-CQjF_HV3FLcTtgMUg1oR2UjkaojT25QiwQpF4xw",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVc2VyIiwiZ2l2ZW5fbmFtZSI6IlVzZXIiLCJmYW1pbHlfbmFtZSI6IlVzZXIiLCJqdGkiOiJhZmVhOTkyNS1jZTlhLTRhNDEtOTg2Zi04N2I4NjI0NzhkNTUiLCJleHAiOjIwNDE5ODg5NjgsImlzcyI6IkhpZ2hsb2FkU29jaWFsIiwiYXVkIjoiSGlnaGxvYWRTb2NpYWwifQ.dS4kCmCrzcbVVzYMpEDCOotTSep-zqs0tDnLWZjVlUs",
 				"type": "string"
 			}
 		]
