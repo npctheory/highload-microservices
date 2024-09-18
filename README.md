@@ -34,7 +34,8 @@ dialog/list
 dialog/{agentId}/list  
 dialog/{receiverId}/send  
 
-Проекты с префиксом Dialogs собираются в образ dialogs:local, который запускается в контейнере dialogs. На dialogs:80 (http://localhost:8180) работают эндпоинты:  
+Проекты с префиксом Dialogs собираются в образ dialogs:local, который запускается в контейнере dialogs.  
+На dialogs:80 (http://localhost:8180) работают эндпоинты:  
 dialog/list  
 dialog/{agentId}/list  
 dialog/{receiverId}/send  
